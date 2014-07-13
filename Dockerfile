@@ -1,4 +1,3 @@
-# This is a comment
 FROM ubuntu:14.04
 MAINTAINER Damian Soriano <ds@ingadhoc.com>
 RUN apt-get clean
@@ -14,11 +13,15 @@ RUN echo 'root:odoo' | chpasswd
 
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Odoo instalation
 RUN apt-get install -y git
-RUN mkdir -p /opt/odoo
 RUN sudo apt-get install -y python-pip
+#RUN sudo pip install --upgrade virtualenv 
 
-RUN git clone -b saas-5 https://github.com/odoo/odoo.git /opt/odoo/
+RUN mkdir -p /opt/odoo
+RUN git clone -b 8.0 https://github.com/odoo/odoo.git /opt/odoo/server
+RUN python /opt/odoo/server/setup.py install
 
 EXPOSE 22 8069
-CMD ["/usr/bin/supervisord"]
+#CMD ["/usr/bin/supervisord"]
+CMD ["/opt/odoo/server/odoo.py -c /opt/odoo/odoo.conf"]
