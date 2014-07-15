@@ -1,5 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Damian Soriano <ds@ingadhoc.com>
+
 RUN apt-get clean
 RUN apt-get update
 RUN apt-get upgrade -y
@@ -8,7 +9,7 @@ RUN apt-get upgrade -y
 #RUN mkdir -p /var/run/sshd
 #RUN mkdir -p /var/log/supervisor
 
-RUN useradd -p odoo odoo
+RUN useradd -m -p odoo odoo
 RUN echo 'root:odoo' | chpasswd
 
 #ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -23,9 +24,14 @@ RUN apt-get update && apt-get install -y python-pip
 
 RUN mkdir -p /opt/odoo
 RUN git clone -b 8.0 https://github.com/odoo/odoo.git /opt/odoo/server
-RUN cd /opt/odoo/server/
-RUN python setup.py install
 
-EXPOSE 22 8069
+RUN (cd /opt/odoo/server/ ; python setup.py install)
+
+ADD odoo.conf /opt/odoo/server/odoo.conf
+
+#RUN cd /opt/odoo/server/
+
+#EXPOSE 22 8069
 #CMD ["/usr/bin/supervisord"]
-CMD ["/opt/odoo/server/odoo.py -c /opt/odoo/odoo.conf"]
+CMD ["sudo -u odoo /opt/odoo/server/odoo.py -c /opt/odoo/odoo.conf"]
+#CMD ["/bin/bash"]
