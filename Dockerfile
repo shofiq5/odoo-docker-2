@@ -29,9 +29,11 @@ RUN (cd /opt/odoo/server/ ; python setup.py install)
 
 ADD odoo.conf /opt/odoo/server/odoo.conf
 
+RUN chown -R odoo.odoo server/
+
 #RUN cd /opt/odoo/server/
 
 #EXPOSE 22 8069
 #CMD ["/usr/bin/supervisord"]
-CMD ["sudo -u odoo /opt/odoo/server/odoo.py -c /opt/odoo/odoo.conf"]
+CMD ["sudo -u odoo /opt/odoo/server/odoo.py -c /opt/odoo/server/odoo.conf"]
 #CMD ["/bin/bash"]
