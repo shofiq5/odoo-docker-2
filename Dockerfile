@@ -10,7 +10,6 @@ RUN apt-get upgrade -y
 #RUN mkdir -p /var/log/supervisor
 
 RUN useradd -m -p odoo odoo
-RUN echo 'root:odoo' | chpasswd
 
 #ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
