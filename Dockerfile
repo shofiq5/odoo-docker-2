@@ -22,6 +22,8 @@ RUN apt-get update && apt-get install -y python-pip python-dev build-essential l
 RUN apt-get update && apt-get install -y git
 RUN apt-get update && apt-get install -y python-pip
 
+RUN pip install pyPdf
+
 RUN mkdir -p /opt/odoo
 RUN git clone -b 8.0 https://github.com/odoo/odoo.git /opt/odoo/server
 
