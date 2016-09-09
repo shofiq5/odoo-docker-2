@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y python-pip
 RUN pip install pyPdf
 
 RUN mkdir -p /opt/odoo
-RUN git clone -b 8.0 https://github.com/odoo/odoo.git /opt/odoo/server
+RUN git clone -b 9.0 https://github.com/odoo/odoo.git /opt/odoo/server
 
 RUN (cd /opt/odoo/server/ ; python setup.py install)
 
